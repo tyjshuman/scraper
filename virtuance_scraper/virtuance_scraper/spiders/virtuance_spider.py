@@ -35,7 +35,7 @@ class VirtuanceSpider(scrapy.Spider):
 			
 				contact = response.css('div[id=agentInfoInner]')[0]
 				name 	= contact.css('span[id=customerFullName]::text').extract_first()
-       				company = contact.css('span[id=customerCompany]::text').extract_first()
+				company = contact.css('span[id=customerCompany]::text').extract_first()
 		        	phone 	= contact.css('span[id=customerContactPhone]::text').extract_first()
      	        		email 	= contact.css('a[id=customerEmail]::text').extract_first()
      	        
