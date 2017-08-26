@@ -8,6 +8,8 @@ class VirtuanceSpider(scrapy.Spider):
 	
 	def start_requests(self):
 	
+		# eg. run on command line as: 
+		# scrapy crawl virtuance -o output.json -a s=5 -a e=10 -a n=100
 		start_page_number 		= getattr(self, 's', '1') # using string numbers since command line args come in as strings.
 		end_page_number 		= getattr(self, 'e', '1')
 		num_results_per_page 	= getattr(self, 'n', '10')
@@ -28,28 +30,32 @@ class VirtuanceSpider(scrapy.Spider):
 		else:
 			#extract the contact information
 			address = response.css('title::text').extract_first().split(" - ")[0]
+			
 			if(len(response.css('div[id=agentInfoInner]')) > 0):
+			
 				contact = response.css('div[id=agentInfoInner]')[0]
-				name = contact.css('span[id=customerFullName]::text').extract_first()
-       			  	company = contact.css('span[id=customerCompany]::text').extract_first()
-		                phone = contact.css('span[id=customerContactPhone]::text').extract_first()
-     	               		email = contact.css('a[id=customerEmail]::text').extract_first()
+				name 	= contact.css('span[id=customerFullName]::text').extract_first()
+       			company = contact.css('span[id=customerCompany]::text').extract_first()
+		        phone 	= contact.css('span[id=customerContactPhone]::text').extract_first()
+     	        email 	= contact.css('a[id=customerEmail]::text').extract_first()
+     	        
 				if name is None:
-					logging.log(logging.ERROR, "Missed name at: " + page_url)
+					logging.error("Missed name at: " + page_url)
+					
 				else:
 					yield {
-						'name' : name,
-						'company' : company,
-						'phone' : phone,
-						'email' : email,
-						'address' : address
+						'name' 		: name,
+						'company' 	: company,
+						'phone' 	: phone,
+						'email' 	: email,
+						'address' 	: address
 					}
 			else:
 				jsonresponse = json.loads(response.body_as_unicode().split("      window.tourData = ")[1].split("\n    </script>")[0])
-       		         	name = jsonresponse["tour"]["agents"][0]["name"]
+       		         	name 	= jsonresponse["tour"]["agents"][0]["name"]
        		         	company = jsonresponse["tour"]["agents"][0]["broker"]
-               		 	phone = jsonresponse["tour"]["agents"][0]["phone"]
-               		 	email = jsonresponse["tour"]["agents"][0]["email"]
+               		 	phone 	= jsonresponse["tour"]["agents"][0]["phone"]
+               		 	email 	= jsonresponse["tour"]["agents"][0]["email"]
 
                 		yield{
                         		'name' : name,
