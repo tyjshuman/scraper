@@ -10,9 +10,9 @@ class VirtuanceSpider(scrapy.Spider):
 	
 		# eg. run on command line as: 
 		# scrapy crawl virtuance -o output.json -a s=5 -a e=10 -a n=100
-		start_page_number 		= getattr(self, 's', '1') # using string numbers since command line args come in as strings.
-		end_page_number 		= getattr(self, 'e', '1')
-		num_results_per_page 	= getattr(self, 'n', '10')
+		start_page_number	= getattr(self, 's', '1') # using string numbers since command line args come in as strings.
+		end_page_number		= getattr(self, 'e', '1')
+		num_results_per_page	= getattr(self, 'n', '10')
 	
 		for page in range(int(start_page_number), int(end_page_number) + 1):
 		
