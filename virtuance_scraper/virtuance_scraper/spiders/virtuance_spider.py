@@ -20,16 +20,18 @@ class VirtuanceSpider(scrapy.Spider):
 			logging.info("Scraping page: " + page_url)
 			yield scrapy.Request(url=page_url, callback=self.parse)
 
-	def parse(self, response):
-	
+	def parse(self, response):	
 		#Iterate through the listings on the page
 		if response.css('title::text').extract_first() == "Tours hosted by tours.virtuance.com":
+			index = 0
 			for links in response.xpath('.//a[contains(@id,"viewBranded")]'):
 				page_url = links.xpath('./@href').extract_first()
-				yield scrapy.Request(url=page_url, callback=self.parse)
+				listing_address = response.selector.xpath('//a[contains(@id,"viewBranded")]/text()').extract()[index]
+				index += 1
+				yield scrapy.Request(url=page_url, callback=self.parse,meta={'address':listing_address})
 		else:
 			#extract the contact information
-			address = response.css('title::text').extract_first().split(" - ")[0]
+			address = response.meta['address']
 			
 			if(len(response.css('div[id=agentInfoInner]')) > 0):
 			
