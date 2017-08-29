@@ -22,12 +22,12 @@ USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 1
+CONCURRENT_REQUESTS = 64
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 1
+DOWNLOAD_DELAY = .6
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -47,6 +47,21 @@ DEFAULT_REQUEST_HEADERS = {
     'Accept-Language': 'en-US,*',
 }
 
+RETRY_TIMES = 10
+RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
+
+# Proxy list containing entries like
+# http://host1:port
+# http://username:password@host2:port
+# http://host3:port
+# ...
+#PROXY_LIST = '/root/projects/scraper/virtuance_scraper/virtuance_scraper/proxies.txt'
+
+# Proxy mode
+# 0 = Every requests have different proxy
+# 1 = Take only one proxy from the list and assign it to every requests
+# 2 = Put a custom proxy to use in the settings
+#PROXY_MODE = 0
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
@@ -57,7 +72,9 @@ DEFAULT_REQUEST_HEADERS = {
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'virtuance_scraper.middlewares.MyCustomDownloaderMiddleware': 543,
+#    'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
+#    'scrapy_proxies.RandomProxy': 100,
+#    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
 #}
 #DOWNLOADER_MIDDLEWARES = {
 #        'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware' : None,

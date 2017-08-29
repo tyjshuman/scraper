@@ -14,8 +14,7 @@ class VirtuanceSpider(scrapy.Spider):
 		end_page_number		= getattr(self, 'e', '1')
 		num_results_per_page	= getattr(self, 'n', '10')
 	
-		for page in range(int(start_page_number), int(end_page_number) + 1):
-		
+		for page in range(int(start_page_number), int(end_page_number) + 1):	
 			page_url = "http://tours.virtuance.com/public/tour/search/WFNull/%s|%s|" % (page, num_results_per_page)
 			logging.info("Scraping page: " + page_url)
 			yield scrapy.Request(url=page_url, callback=self.parse)

@@ -6,7 +6,7 @@ class VirtuanceSpider(scrapy.Spider):
 	name 			= 'virtuance_all_tours'
 	handle_httpstatus_list 	= [404]
 	num_consecutive_404s 	= 0;
-	consecutive_404_limit 	= 10;
+	consecutive_404_limit 	= 1000;
 	
 	def start_requests(self):
 		# eg. run on command line as: 
@@ -16,7 +16,7 @@ class VirtuanceSpider(scrapy.Spider):
 
 		for virtuance_customer_id in range(int(start_id), int(end_id) + 1):
 
-			url = "http://tours.virtuance.com/public/vtour/customerTours/" + str(virtuance_customer_id)
+			url = "http://tourbuzz.net/public/vtour/customerTours/" + str(virtuance_customer_id)
 			self.logger.info("Scraping page: " + url)
 			request = scrapy.Request(url=url, callback=self.parse) 
 			request.meta['virtuance_customer_id'] = virtuance_customer_id
