@@ -1,6 +1,7 @@
 # Fabfile to take a spider, split it into equal sizes, run the spider on a list of specified hosts, the collect back the scraped information
 
 from fabric.api import *
+from fabric.context_manager import cd
 import subprocess
 import tarfile
 
@@ -26,10 +27,15 @@ def buildWorkerPayload():
 		out.close()
 
 def initScrapy():
-	sudo("iptables-save > /root/ipt.bak")
-	sudo("pip install scrapy")
-	put("payload.tar","/root/")
-	sudo("cd /root/")
-	sudo("tar -xf payload.tar")
+	with cd('/root'):
+		sudo("iptables-save > ipt.bak")
+		sudo("iptables -F"
+		sudo("pip install scrapy")
+		put("payload.tar","/root/")
+		sudo("tar -xf payload.tar")
 
-def runScrapy
+def runScrapy():
+	with cd('/root'):
+		sudo("scrapy crawl virtuance_all_tours -a s=%d -a e=%d",start,end)
+
+	
