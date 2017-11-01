@@ -27,3 +27,5 @@ def read(jsonFile):
 		print "Loaded ",counter, " lines"
 
 read("/home/tshuman/projects/scrapers/virtuance/virtuance_scraper/virtuance_scraper/scrapedPages/scrapedPages.json")
+read("/home/tshuman/projects/scrapers/virtuance/virtuance_scraper/virtuance_scraper/scrapedPages/scrapedPages2.json")
+read("/home/tshuman/projects/scrapers/virtuance/virtuance_scraper/virtuance_scraper/scrapedPages/scrapedPages3.json")

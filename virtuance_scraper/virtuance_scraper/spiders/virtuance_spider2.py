@@ -2,9 +2,9 @@ import scrapy
 import json
 import logging
 
-class VirtuanceSpider(scrapy.Spider):
+class VirtuanceSpider2(scrapy.Spider):
 
-	name = 'virtuance'
+	name = 'virtuance2'
 	
 	def start_requests(self):
 	

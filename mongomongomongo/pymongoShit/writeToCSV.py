@@ -7,8 +7,7 @@ from pymongo import MongoClient
 #Load the database
 mongo = MongoClient("mongodb://localhost:27017")
 db = mongo["virtuance"]
-
-cursor = db.newClients.find({"address" : {'$regex' : ".*TX.*"}},{'_id':0, 'name':1, 'company':1, 'email':1, 'address':1})
+cursor = db.clients.find({},{'_id':0, 'name':1, 'company':1, 'email':1, 'address':1})
 
 def validateClientInfo(client):
 	valid = True
@@ -38,7 +37,7 @@ def validateClientInfo(client):
 	return valid
 
 def writeCSV(entries):
-	with open('clients.csv','w') as outfile:
+	with open('allClients.csv','w') as outfile:
                 fields = ['first','last','email','broker','zip']
                 writer = csv.DictWriter(outfile, fieldnames=fields)
 		for client in entries:
