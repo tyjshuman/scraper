@@ -11,7 +11,7 @@ cursor = db.clients.find({},{'_id':0, 'name':1, 'company':1, 'email':1, 'address
 
 def validateClientInfo(client):
 	valid = True
-        if client["name"] == None or client["email"] == None or client["address"] == None or client["company"] == None:
+        if client["name"] == None or client["email"] == None or client["address"] == None:
                 valid = False
 		print "Entries incomplete"
 	
@@ -19,7 +19,7 @@ def validateClientInfo(client):
 		valid = False	
 		print "No space in name"
 
-	if set('0123456789`~!@#$%^&*()_-+={[}]|\\:;"\'<,>.?/\u').intersection(client["name"]):
+	if set('0123456789~!@#$%^&*()_+={[}]|\\:;\<>?/\u').intersection(client["name"]):
 		valid = False
 		print "Weird characters in name"
 
@@ -27,7 +27,7 @@ def validateClientInfo(client):
 		valid = False
 		print "No zip code"
 
-	if re.search('the|resort|apartments|company|living|property|management|and|or',client['name'], re.IGNORECASE) != None:
+	if re.search(' the | resort | apartments | company | living | property | management | and | or ',client['name'], re.IGNORECASE) != None:
 		valid = False
 		print "Name is a company name"
 
