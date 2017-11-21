@@ -8,7 +8,7 @@ from pymongo import MongoClient
 
 def read(jsonFile):
 	client = MongoClient('mongodb://localhost:27017/')
-	db = client["texasTest4"]
+	db = client[sys.argv[1]]
 
 	counter = 0
 	with open(jsonFile, 'r') as f:
@@ -35,7 +35,7 @@ def read(jsonFile):
 	else : 
 		print "Loaded ",counter, " lines"
 
-fileName = sys.argv[1]
+fileName = sys.argv[1]+"/"
 print os.listdir(fileName)
 for textFile in os.listdir(fileName):
 	read(fileName+textFile)
